@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "formula-trace"
+version = "0.1.0"
+description = "Trace precedent and dependent cells across a sheet of spreadsheet formulas"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "pjjackson2" }]
+
+[project.scripts]
+formula-trace = "formula_trace.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["formula_trace*"]
