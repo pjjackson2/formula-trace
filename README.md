@@ -60,6 +60,14 @@ B1
 B2
 ```
 
+Pass `--format json` to get a single JSON object instead of one cell per line,
+for feeding the result into another tool:
+
+```
+$ formula-trace sheet.csv --cell C1 --format json
+{"cell": "C1", "direction": "precedents", "direct_only": false, "references": ["A1", "A2", "B1", "B2"]}
+```
+
 ## Install
 
 No dependencies beyond the standard library.

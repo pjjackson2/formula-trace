@@ -1,4 +1,5 @@
 import argparse
+import json
 import sys
 
 from .graph import build_dependents, build_precedents, read_formula_rows, transitive_closure
@@ -27,6 +28,12 @@ def main(argv=None):
         action="store_true",
         help="show only direct references instead of the full transitive closure",
     )
+    parser.add_argument(
+        "--format",
+        choices=["text", "json"],
+        default="text",
+        help="text = one cell per line (default); json = a single JSON object",
+    )
 
     args = parser.parse_args(argv)
     target = args.cell.strip().upper()
@@ -45,8 +52,19 @@ def main(argv=None):
     else:
         result = transitive_closure(target, adjacency)
 
-    for cell in sorted(result):
-        print(cell)
+    ordered = sorted(result)
+
+    if args.format == "json":
+        payload = {
+            "cell": target,
+            "direction": args.direction,
+            "direct_only": args.direct_only,
+            "references": ordered,
+        }
+        print(json.dumps(payload))
+    else:
+        for cell in ordered:
+            print(cell)
 
     return 0
 
